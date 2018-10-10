@@ -8,6 +8,7 @@ namespace PhonebookApp.Models
 {
     public class PersonViewModel
     {
+        [Display(Name = "Person Id")]
         public int PersonId { get; set; }
         [Required]
         [Display(Name = "First Name")]
@@ -25,7 +26,6 @@ namespace PhonebookApp.Models
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
         [Display(Name = "Added By")]
-        [DataType(DataType.Date)]
         public String AddedBy { get; set; }
         [Required]
         [Display(Name = "Home Address")]

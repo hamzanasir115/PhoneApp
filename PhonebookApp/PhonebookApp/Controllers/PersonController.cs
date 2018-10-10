@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PhonebookApp.Models;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 
 namespace PhonebookApp.Controllers
 {
@@ -12,7 +14,30 @@ namespace PhonebookApp.Controllers
         // GET: Person
         public ActionResult Index()
         {
-            return View();
+            PhoneBookDbEntities db = new PhoneBookDbEntities();
+            List<Person> list = db.People.ToList();
+            List<PersonViewModel> viewList = new List<PersonViewModel>();
+            foreach(Person p in list)
+            {
+                PersonViewModel obj = new PersonViewModel();
+                obj.PersonId = p.PersonId;
+                obj.FirstName = p.FirstName;
+                obj.MiddleName = p.MiddleName;
+                obj.LastName = p.LastName;
+                obj.DateOfBirth = Convert.ToDateTime(p.DateOfBirth);
+                obj.AddedOn = p.AddedOn;
+                obj.AddedBy = p.AddedBy;
+                obj.HomeAddress = p.HomeAddress;
+                obj.HomeCity = p.HomeCity;
+                obj.FaceBookAccountId = p.FaceBookAccountId;
+                obj.LinkedInId = p.LinkedInId;
+                obj.UpdateOn = Convert.ToDateTime(p.UpdateOn);
+                obj.ImagePath = p.ImagePath;
+                obj.TwitterId = p.TwitterId;
+                obj.EmailId = p.EmailId;
+                viewList.Add(obj);
+            }
+            return View(viewList);
         }
 
         // GET: Person/Details/5
@@ -22,6 +47,7 @@ namespace PhonebookApp.Controllers
         }
 
         // GET: Person/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -31,6 +57,7 @@ namespace PhonebookApp.Controllers
         [HttpPost]
         public ActionResult Create(PersonViewModel obj)
         {
+            
             try
             {
                 Person p = new Person();
@@ -39,22 +66,30 @@ namespace PhonebookApp.Controllers
                 p.MiddleName = obj.MiddleName;
                 p.LastName = obj.LastName;
                 p.DateOfBirth = obj.DateOfBirth;
-                p.AddedOn = obj.AddedOn;
-                p.AddedBy = obj.AddedBy;
+                p.AddedOn = DateTime.Now;
+                
                 p.HomeAddress = obj.HomeAddress;
                 p.HomeCity = obj.HomeCity;
                 p.FaceBookAccountId = obj.FaceBookAccountId;
                 p.LinkedInId = obj.LinkedInId;
-                p.UpdateOn = obj.UpdateOn;
+                p.UpdateOn = DateTime.Now;
                 p.ImagePath = obj.ImagePath;
                 p.TwitterId = obj.TwitterId;
                 p.EmailId = obj.EmailId;
         
                 PhoneBookDbEntities db = new PhoneBookDbEntities();
+                String ID = "";
+                List<AspNetUser> dbList = db.AspNetUsers.ToList();
+                foreach(AspNetUser usr in dbList)
+                {
+                    if(usr.Email == p.EmailId)
+                    {
+                        ID = usr.Id;
+                    }
+                }
+                p.AddedBy = ID;
                 db.People.Add(p);
-                db.SaveChanges();
-
-               
+                db.SaveChanges();              
                 // TODO: Add insert logic here
 
                 return RedirectToAction("Index");

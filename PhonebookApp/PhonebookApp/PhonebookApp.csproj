@@ -198,21 +198,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Contact.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -221,11 +222,12 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PersonViewModel.cs" />
     <Compile Include="Person.cs">
-      <DependentUpon>PersonModel.tt</DependentUpon>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PersonModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -241,6 +243,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PersonModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonViewModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonViewModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonViewModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonViewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonViewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonViewModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -262,6 +279,16 @@
       <DependentUpon>PersonModel.edmx</DependentUpon>
       <LastGenOutput>PersonModel.cs</LastGenOutput>
     </Content>
+    <Content Include="PersonViewModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonViewModel.edmx</DependentUpon>
+      <LastGenOutput>PersonViewModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="PersonViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonViewModel.edmx</DependentUpon>
+      <LastGenOutput>PersonViewModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -276,6 +303,13 @@
     <Content Include="PersonModel.edmx.diagram">
       <DependentUpon>PersonModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="PersonViewModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PersonViewModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="PersonViewModel.edmx.diagram">
+      <DependentUpon>PersonViewModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -288,7 +322,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -323,6 +359,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Person\Create.cshtml" />
+    <Content Include="Views\Contact\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
