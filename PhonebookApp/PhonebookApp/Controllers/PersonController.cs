@@ -152,7 +152,18 @@ namespace PhonebookApp.Controllers
             {
                 using (PhoneBookDbEntities db = new PhoneBookDbEntities())
                 {
-                    db.Entry(obj).State = EntityState.Modified;
+                    db.People.Find(id).FirstName = obj.FirstName;
+                    db.People.Find(id).MiddleName = obj.MiddleName;
+                    db.People.Find(id).LastName = obj.LastName;
+                    db.People.Find(id).DateOfBirth = obj.DateOfBirth;
+                    db.People.Find(id).HomeAddress = obj.HomeAddress;
+                    db.People.Find(id).HomeCity = obj.HomeCity;
+                    db.People.Find(id).FaceBookAccountId = obj.FaceBookAccountId;
+                    db.People.Find(id).LinkedInId = obj.LinkedInId;
+                    db.People.Find(id).ImagePath = obj.ImagePath;
+                    db.People.Find(id).TwitterId = obj.TwitterId;
+                    db.People.Find(id).EmailId = obj.EmailId;
+                    //db.Entry(obj).State = EntityState.Modified;
                     db.SaveChanges();
                 }
                     
