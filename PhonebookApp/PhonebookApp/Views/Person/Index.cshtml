@@ -110,7 +110,11 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.PersonId }) |
             @Html.ActionLink("Details", "Details", new { id = item.PersonId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.PersonId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.PersonId }) |
+            @Html.ActionLink("Add Contacts", "AddContacts", new { id = item.PersonId }) |
+            @Html.ActionLink("View Contacts", "ViewContacts", new { id = item.PersonId })
+
+
         </td>
     </tr>
 }

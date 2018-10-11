@@ -20,7 +20,7 @@ namespace PhonebookApp.Controllers
             PhoneBookDbEntities db = new PhoneBookDbEntities();
             List<Person> list = db.People.ToList();
             List<PersonViewModel> viewList = new List<PersonViewModel>();
-            foreach(Person p in list)
+            foreach (Person p in list)
             {
                 PersonViewModel obj = new PersonViewModel();
                 obj.PersonId = p.PersonId;
@@ -50,12 +50,12 @@ namespace PhonebookApp.Controllers
             {
                 return View(db.People.Where(x => x.PersonId == id).FirstOrDefault());
             }
-           /* Person per = db.People.Find(id);
-            if(per == null)
-            {
-                return HttpNotFound();
-            }
-            return View(per);*/
+            /* Person per = db.People.Find(id);
+             if(per == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(per);*/
             //var person = db.People.Single(c => c.PersonId == id);
             //return View(person);
             /*using (PhoneBookDbEntities db = new PhoneBookDbEntities())
@@ -90,7 +90,7 @@ namespace PhonebookApp.Controllers
         [HttpPost]
         public ActionResult Create(PersonViewModel obj)
         {
-            
+
             try
             {
                 Person p = new Person();
@@ -100,7 +100,7 @@ namespace PhonebookApp.Controllers
                 p.LastName = obj.LastName;
                 p.DateOfBirth = obj.DateOfBirth;
                 p.AddedOn = DateTime.Now;
-                
+
                 p.HomeAddress = obj.HomeAddress;
                 p.HomeCity = obj.HomeCity;
                 p.FaceBookAccountId = obj.FaceBookAccountId;
@@ -109,20 +109,20 @@ namespace PhonebookApp.Controllers
                 p.ImagePath = obj.ImagePath;
                 p.TwitterId = obj.TwitterId;
                 p.EmailId = obj.EmailId;
-        
+
                 PhoneBookDbEntities db = new PhoneBookDbEntities();
-                String ID="";
-                List<AspNetUser> dbList=db.AspNetUsers.ToList();
-                foreach(AspNetUser usr in dbList)
+                String ID = "";
+                List<AspNetUser> dbList = db.AspNetUsers.ToList();
+                foreach (AspNetUser usr in dbList)
                 {
-                    if(  usr.Email==p.EmailId  )
+                    if (usr.Email == p.EmailId)
                     {
-                        ID=usr.Id;
+                        ID = usr.Id;
                     }
                 }
-                p.AddedBy= User.Identity.GetUserId();
+                p.AddedBy = User.Identity.GetUserId();
                 db.People.Add(p);
-                db.SaveChanges();              
+                db.SaveChanges();
                 // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
@@ -134,10 +134,10 @@ namespace PhonebookApp.Controllers
         }
 
         // GET: Person/Edit/5
-        
+
         public ActionResult Edit(int id)
         {
-            
+
             using (PhoneBookDbEntities db = new PhoneBookDbEntities())
             {
                 return View(db.People.Where(x => x.PersonId == id).Single());
@@ -166,8 +166,8 @@ namespace PhonebookApp.Controllers
                     //db.Entry(obj).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                    
-                    return RedirectToAction("Index");
+
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -180,7 +180,7 @@ namespace PhonebookApp.Controllers
         {
             PhoneBookDbEntities db = new PhoneBookDbEntities();
             Person p = db.People.Find(id);
-          
+
             return View(p);
         }
 
@@ -190,22 +190,64 @@ namespace PhonebookApp.Controllers
         {
             try
             {
-                
+
                 // TODO: Add delete logic here
                 PhoneBookDbEntities db = new PhoneBookDbEntities();
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    var delete = (from d in db.People
-                                  where d.PersonId == id
-                                  select d).FirstOrDefault();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                    var delete = db.People.Where(x => x.PersonId == id).Single();
+                                  
+                    foreach(Contact c in delete.Contacts)
+                    {
+                        db.Contacts.Remove(c);
+                    }
+                    delete.Contacts.Clear();
                     db.People.Remove(delete);
-                    db.SaveChanges(); 
+                    db.SaveChanges();
                 }
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
+            }
+        }
+        public ActionResult AddContacts(int id)
+        {
+
+            using (PhoneBookDbEntities db = new PhoneBookDbEntities())
+            {
+
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddContacts(int id, Contact obj)
+        {
+            try
+            {
+                using (PhoneBookDbEntities db = new PhoneBookDbEntities())
+                {
+                    Person p = db.People.Where(x => x.PersonId == id).Single();
+                    p.Contacts.Add(obj);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public ActionResult ViewContacts(int? id)
+        {
+            using (PhoneBookDbEntities db = new PhoneBookDbEntities())
+            {
+                return View(db.People.Where(x => x.PersonId == id).Single().Contacts);
             }
         }
     }

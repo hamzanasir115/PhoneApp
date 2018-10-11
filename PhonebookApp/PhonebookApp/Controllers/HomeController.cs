@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace PhonebookApp.Controllers
 {
@@ -10,6 +11,8 @@ namespace PhonebookApp.Controllers
     {
         public ActionResult Index()
         {
+            PhoneBookDbEntities db = new PhoneBookDbEntities();
+            ViewBag.number = db.People.Count();
             return View();
         }
 
