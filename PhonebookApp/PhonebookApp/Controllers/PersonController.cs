@@ -146,7 +146,7 @@ namespace PhonebookApp.Controllers
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, PersonViewModel obj)
+        public ActionResult Edit(int id, Person obj)
         {
             try
             {
@@ -155,25 +155,7 @@ namespace PhonebookApp.Controllers
                     db.Entry(obj).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                    /*var PerId = obj.PersonId;
-                    var FirName = obj.FirstName;
-                    var MiddleName = obj.MiddleName;
-                    var LastName = obj.LastName;
-                    var DOB = obj.DateOfBirth;
-                    var AddedOn = obj.AddedOn;
-                    var AddedBy = obj.AddedBy;
-                    var HomeAddress = obj.HomeAddress;
-                    var HomeCity = obj.HomeCity;
-                    var FaceBookAccountId = obj.FaceBookAccountId;
-                    var LinkedInId = obj.LinkedInId;
-                    var UpdateOn = DateTime.Now;
-                    var ImagePath = obj.ImagePath;
-                    var TwitterId = obj.TwitterId;
-                    var EmailId = obj.EmailId;
-                    // TODO: Add update logic here
-                    PhoneBookDbEntities db = new PhoneBookDbEntities();
-
-                    db.SaveChanges();*/
+                    
                     return RedirectToAction("Index");
             }
             catch
@@ -183,14 +165,14 @@ namespace PhonebookApp.Controllers
         }
 
         // GET: Person/Delete/5
-        public ActionResult Delete(int?id)
+        public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: Person/Delete/5
         [HttpPost]
-        public ActionResult Delete(int?id, PersonViewModel obj)
+        public ActionResult Delete(int id, Person obj)
         {
             try
             {
