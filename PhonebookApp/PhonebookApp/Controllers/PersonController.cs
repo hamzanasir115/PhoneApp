@@ -178,7 +178,10 @@ namespace PhonebookApp.Controllers
         // GET: Person/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            PhoneBookDbEntities db = new PhoneBookDbEntities();
+            Person p = db.People.Find(id);
+          
+            return View(p);
         }
 
         // POST: Person/Delete/5
