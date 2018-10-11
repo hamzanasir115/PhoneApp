@@ -241,6 +241,5 @@ F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\bin\Microsof
 F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\bin\Microsoft.Owin.Security.Google.xml
 F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\bin\Microsoft.Owin.Security.Twitter.xml
 F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\obj\Debug\PhonebookApp.csprojResolveAssemblyReference.cache
 F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\obj\Debug\PhonebookApp.dll
 F:\UNI DATA\Semester 5\SE LAB\AZ\Lab5 Git\PhonebookApp\PhonebookApp\obj\Debug\PhonebookApp.pdb
