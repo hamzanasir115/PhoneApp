@@ -14,13 +14,16 @@ namespace PhonebookApp.Controllers
 {
     public class PersonController : Controller
     {
+        [Authorize]
         // GET: Person
         public ActionResult Index()
         {
             PhoneBookDbEntities db = new PhoneBookDbEntities();
             List<Person> list = db.People.ToList();
+            List<Person> PersonList = new List<Person>();
             List<PersonViewModel> viewList = new List<PersonViewModel>();
             string email = System.Web.HttpContext.Current.User.Identity.Name;
+            String user = User.Identity.Name;
             foreach (Person p in list)
             {
                 PersonViewModel obj = new PersonViewModel();
@@ -39,9 +42,14 @@ namespace PhonebookApp.Controllers
                 obj.ImagePath = p.ImagePath;
                 obj.TwitterId = p.TwitterId;
                 obj.EmailId = p.EmailId;
-                viewList.Add(obj);
+                if(user == p.EmailId)
+                {
+                    viewList.Add(obj);
+                    PersonList.Add(p);
+                }
+                
             }
-            return View(db.People);
+            return View(PersonList);
         }
 
         // GET: Person/Details/5
@@ -155,7 +163,7 @@ namespace PhonebookApp.Controllers
         {
             PhoneBookDbEntities db = new PhoneBookDbEntities();
             Person p = db.People.Find(id);
-
+            ViewBag.number = db.Contacts.Count();
             return View(p);
         }
 
@@ -168,10 +176,10 @@ namespace PhonebookApp.Controllers
 
                 // TODO: Add delete logic here
                 PhoneBookDbEntities db = new PhoneBookDbEntities();
-                var ToDelete = db.People.Single(x => x.PersonId == id);
-                foreach(Contact c in db.Contacts)
+                var ToDelete = db.People.Single(x => x.PersonId == id); 
+                foreach (Contact c in db.Contacts)
                 {
-                    db.Contacts.Remove(c);
+                    db.Contacts.Remove(c);   
                 }
                 ToDelete.Contacts.Clear();
                 db.People.Remove(ToDelete);

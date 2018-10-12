@@ -9,10 +9,23 @@ namespace PhonebookApp.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             PhoneBookDbEntities db = new PhoneBookDbEntities();
-            ViewBag.number = db.People.Count();
+            string email = User.Identity.Name;
+            List<Person> ListPerson = new List<Person>();
+            foreach(Person p in db.People)
+            {
+                if(p.EmailId == email)
+                {
+                    ListPerson.Add(p);
+                }
+            }
+            ViewBag.number = ListPerson.Count();
+            
+            // List of persons updated within 7 days
+            
             return View();
         }
 
