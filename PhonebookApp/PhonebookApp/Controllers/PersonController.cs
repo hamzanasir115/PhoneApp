@@ -20,6 +20,7 @@ namespace PhonebookApp.Controllers
             PhoneBookDbEntities db = new PhoneBookDbEntities();
             List<Person> list = db.People.ToList();
             List<PersonViewModel> viewList = new List<PersonViewModel>();
+            string email = System.Web.HttpContext.Current.User.Identity.Name;
             foreach (Person p in list)
             {
                 PersonViewModel obj = new PersonViewModel();
@@ -50,33 +51,7 @@ namespace PhonebookApp.Controllers
             {
                 return View(db.People.Where(x => x.PersonId == id).FirstOrDefault());
             }
-            /* Person per = db.People.Find(id);
-             if(per == null)
-             {
-                 return HttpNotFound();
-             }
-             return View(per);*/
-            //var person = db.People.Single(c => c.PersonId == id);
-            //return View(person);
-            /*using (PhoneBookDbEntities db = new PhoneBookDbEntities())
-            {
-                return View(db.People.Where(x => x.PersonId == id).FirstOrDefault());
-            }
-            */
-            /*PhoneBookDbEntities db = new PhoneBookDbEntities();
-            List<AspNetUser> user = db.AspNetUsers.ToList();
-            string userID = User.Identity.GetUserId().ToString();
-            foreach(AspNetUser u in user)
-            {
-                
-            }*/
-            /*using (PhoneBookDbEntities db = new PhoneBookDbEntities())
-            {
-                return View(db.People.Where(x => x.PersonId == id).FirstOrDefault());
-            }*/
-
-
-
+           
         }
 
         // GET: Person/Create
@@ -193,18 +168,14 @@ namespace PhonebookApp.Controllers
 
                 // TODO: Add delete logic here
                 PhoneBookDbEntities db = new PhoneBookDbEntities();
-                if (ModelState.IsValid)
+                var ToDelete = db.People.Single(x => x.PersonId == id);
+                foreach(Contact c in db.Contacts)
                 {
-                    var delete = db.People.Where(x => x.PersonId == id).Single();
-                                  
-                    foreach(Contact c in delete.Contacts)
-                    {
-                        db.Contacts.Remove(c);
-                    }
-                    delete.Contacts.Clear();
-                    db.People.Remove(delete);
-                    db.SaveChanges();
+                    db.Contacts.Remove(c);
                 }
+                ToDelete.Contacts.Clear();
+                db.People.Remove(ToDelete);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
