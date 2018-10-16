@@ -22,7 +22,7 @@ namespace PhonebookApp.Controllers
             List<Person> list = db.People.ToList();
             List<Person> PersonList = new List<Person>();
             List<PersonViewModel> viewList = new List<PersonViewModel>();
-            string email = System.Web.HttpContext.Current.User.Identity.Name;
+            //string email = System.Web.HttpContext.Current.User.Identity.Name;
             String user = User.Identity.Name;
             foreach (Person p in list)
             {
@@ -42,7 +42,7 @@ namespace PhonebookApp.Controllers
                 obj.ImagePath = p.ImagePath;
                 obj.TwitterId = p.TwitterId;
                 obj.EmailId = p.EmailId;
-                if(user == p.EmailId)
+                if(p.AddedBy == User.Identity.GetUserId())
                 {
                     viewList.Add(obj);
                     PersonList.Add(p);
@@ -88,7 +88,8 @@ namespace PhonebookApp.Controllers
                 p.HomeCity = obj.HomeCity;
                 p.FaceBookAccountId = obj.FaceBookAccountId;
                 p.LinkedInId = obj.LinkedInId;
-                p.UpdateOn = DateTime.Now;
+                p.UpdateOn = new DateTime(2018, 09, 1);
+               // p.UpdateOn = DateTime.Now;
                 p.ImagePath = obj.ImagePath;
                 p.TwitterId = obj.TwitterId;
                 p.EmailId = obj.EmailId;
